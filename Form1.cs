@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -123,24 +124,33 @@ namespace DataMining
             var textBox = form3.getTextBox();
 
             int counter = 0;
+          
             foreach (var aprioriOutputLine in sortedAprioriLines) {
+                string output = "";
+                output += counter + " ";
+                output += " SUPPORT " + aprioriOutputLine.supportValue + "  {";
+                output += (!string.IsNullOrEmpty(aprioriOutputLine.age)) ?  aprioriOutputLine.age : "*,";
+                output += (!string.IsNullOrEmpty(aprioriOutputLine.country)) ? "," + aprioriOutputLine.country : "*,";
+                output += (!string.IsNullOrEmpty(aprioriOutputLine.education)) ? "," + aprioriOutputLine.education : "*,";
+                output += (!string.IsNullOrEmpty(aprioriOutputLine.edu_num)) ? "," + aprioriOutputLine.edu_num : "*,";
+                output += (!string.IsNullOrEmpty(aprioriOutputLine.gain)) ? "," + aprioriOutputLine.gain : "*,";
+                output += (!string.IsNullOrEmpty(aprioriOutputLine.hours)) ? "," + aprioriOutputLine.hours: "*,";
+                output += (!string.IsNullOrEmpty(aprioriOutputLine.loss)) ? "," + aprioriOutputLine.loss : "*,";
+                output += (!string.IsNullOrEmpty(aprioriOutputLine.marital)) ? "," + aprioriOutputLine.marital : "*,";
+                output += (!string.IsNullOrEmpty(aprioriOutputLine.occupation)) ? "," + aprioriOutputLine.occupation  : "*,";
+                output += (!string.IsNullOrEmpty(aprioriOutputLine.race)) ? "," + aprioriOutputLine.race  : "*,";
+                output += (!string.IsNullOrEmpty(aprioriOutputLine.relationship)) ? "," + aprioriOutputLine.relationship : "*,";
+                output += (!string.IsNullOrEmpty(aprioriOutputLine.salary)) ? "," + aprioriOutputLine.salary : "*,";
+                output += (!string.IsNullOrEmpty(aprioriOutputLine.sex)) ? "," + aprioriOutputLine.sex : "*,";
+                output += (!string.IsNullOrEmpty(aprioriOutputLine.workClass)) ? "," + aprioriOutputLine.workClass : "*,";
+                output += "}\n";
                 counter++;
-                textBox.AppendText(counter + " " +
-                    " SUPPORT " + aprioriOutputLine.supportValue + "  {" +
-                    aprioriOutputLine.age + ", " +
-                    aprioriOutputLine.country + ", " +
-                    aprioriOutputLine.education + ", " +
-                    aprioriOutputLine.edu_num + ", " +
-                    aprioriOutputLine.gain + ", " +
-                    aprioriOutputLine.hours + ", " +
-                    aprioriOutputLine.loss + ", " +
-                    aprioriOutputLine.marital + ", " +
-                    aprioriOutputLine.occupation + ", " +
-                    aprioriOutputLine.race + ", " +
-                    aprioriOutputLine.relationship + ", " +
-                    aprioriOutputLine.salary + ", " +
-                    aprioriOutputLine.sex + ", " +
-                    aprioriOutputLine.workClass + " }"  + "\n");
+
+                StringBuilder sb = new StringBuilder(output);
+                sb.Replace("*,", "");
+                sb.Replace("{,", "{");
+                output = sb.ToString();
+                textBox.AppendText(output);
             }
         }
     }

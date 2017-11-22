@@ -142,7 +142,7 @@ namespace DataMining
                         int startIndex = word.IndexOf('(') +1;
                         int endIndex = word.IndexOf(')') -1;
                         string test = word.Substring(startIndex, endIndex);
-                        aprioriEntry.supportValue = Convert.ToDouble(word.Substring(startIndex, endIndex));
+                        aprioriEntry.supportValue = Convert.ToDouble(word.Substring(startIndex, endIndex).Replace('.',','));
                     }
                 }
                 lines.Add(aprioriEntry);
