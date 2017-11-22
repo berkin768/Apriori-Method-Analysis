@@ -39,6 +39,8 @@
             this.fileDialog = new System.Windows.Forms.OpenFileDialog();
             this.label5 = new System.Windows.Forms.Label();
             this.B_fullData = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.B_supportedData = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -122,7 +124,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(60, 221);
+            this.label5.Location = new System.Drawing.Point(511, 74);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(93, 17);
             this.label5.TabIndex = 8;
@@ -130,7 +132,7 @@
             // 
             // B_fullData
             // 
-            this.B_fullData.Location = new System.Drawing.Point(63, 241);
+            this.B_fullData.Location = new System.Drawing.Point(514, 94);
             this.B_fullData.Name = "B_fullData";
             this.B_fullData.Size = new System.Drawing.Size(90, 29);
             this.B_fullData.TabIndex = 9;
@@ -138,11 +140,32 @@
             this.B_fullData.UseVisualStyleBackColor = true;
             this.B_fullData.Click += new System.EventHandler(this.B_fullData_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(49, 247);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(124, 17);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "Data With Support";
+            // 
+            // B_supportedData
+            // 
+            this.B_supportedData.Location = new System.Drawing.Point(63, 267);
+            this.B_supportedData.Name = "B_supportedData";
+            this.B_supportedData.Size = new System.Drawing.Size(90, 29);
+            this.B_supportedData.TabIndex = 11;
+            this.B_supportedData.Text = "View Data";
+            this.B_supportedData.UseVisualStyleBackColor = true;
+            this.B_supportedData.Click += new System.EventHandler(this.B_supportedData_Click);
+            // 
             // Frame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(693, 401);
+            this.Controls.Add(this.B_supportedData);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.B_fullData);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.T_minSupport);
@@ -174,6 +197,8 @@
         private System.Windows.Forms.OpenFileDialog fileDialog;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button B_fullData;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button B_supportedData;
     }
 }
 

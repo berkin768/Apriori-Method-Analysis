@@ -76,6 +76,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="census.dat" />
     <None Include="Properties\DataSources\DataMining.Properties.Resources.datasource" />
     <None Include="Properties\DataSources\DataMining.Properties.Settings.datasource" />
     <None Include="Properties\DataSources\Entry.datasource" />
@@ -91,6 +92,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="apriori.exe" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -61,7 +63,7 @@ namespace DataMining
                 lines = fileReader.GetEntries;
             }
             B_fullData.Enabled = true;
-            
+            B_supportedData.Enabled = true;
         }
 
         private void B_fullData_Click(object sender, EventArgs e)
@@ -75,7 +77,29 @@ namespace DataMining
         private void Frame_Load(object sender, EventArgs e)
         {
             B_fullData.Enabled = false;
+            B_supportedData.Enabled = false;
+        }
+
+        private void B_supportedData_Click(object sender, EventArgs e)
+        {
+            var aprioriProcess = new ProcessStartInfo();
+            aprioriProcess.UseShellExecute = true;
             
+            string workingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            int index = workingDirectory.IndexOf("bin");
+            if (index > 0)
+            {
+                workingDirectory = workingDirectory.Remove(index, 10);
+            }
+
+            //proc1.WorkingDirectory = @"C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining";
+            aprioriProcess.WorkingDirectory = workingDirectory;
+            aprioriProcess.FileName = @"C:\Windows\System32\cmd.exe";
+            string command = "-s20 census.dat -";
+            aprioriProcess.Arguments = "/k apriori.exe " + command;
+            
+
+            Process.Start(aprioriProcess);
         }
     }
 }
