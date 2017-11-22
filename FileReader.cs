@@ -6,15 +6,22 @@ using System.Threading.Tasks;
 
 namespace DataMining
 {
-    public class FileReader
+    public sealed class FileReader
     {
-        public FileReader()
+        private FileReader()
         {
-            List<Entry> lines = new List<Entry>();
-
         }
-        
-
-
+        private static FileReader fileReader = null;
+        public static FileReader Instance
+        {
+            get
+            {
+                if (fileReader == null)
+                {
+                    fileReader = new FileReader();
+                }
+                return fileReader;
+            }
+        }
     }
 }
