@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace DataMining
 {
     public partial class Frame : Form
-    {       
+    {
         static List<Entry> lines = null;
         public Frame()
         {
@@ -52,24 +52,30 @@ namespace DataMining
 
         private void B_load_Click(object sender, EventArgs e)
         {
+            string fileName = null;
             DialogResult result = fileDialog.ShowDialog(); // Show the dialog.
             if (result == DialogResult.OK) // Test result.
             {
-                string file = fileDialog.FileName;
-                var fileReader = FileReader.Instance(file);
-                lines = fileReader.GetEntries;               
+                fileName = fileDialog.FileName;
+                var fileReader = FileReader.Instance(fileName, progressBar);
+                lines = fileReader.GetEntries;
             }
+            B_fullData.Enabled = true;
+            
         }
 
         private void B_fullData_Click(object sender, EventArgs e)
         {
-            Form newForm = new Form();
-            newForm.Show();
-            newForm.Text = "asd";
-
-       
+            Form2 form2 = new Form2();
+            form2.Show();
+            var binding = form2.GetBindingSource();
+            binding.DataSource = lines;
         }
 
-        
+        private void Frame_Load(object sender, EventArgs e)
+        {
+            B_fullData.Enabled = false;
+            
+        }
     }
 }

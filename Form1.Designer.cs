@@ -28,19 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.T_partNumber = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.B_load = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.T_minSupport = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.fileDialog = new System.Windows.Forms.OpenFileDialog();
             this.label5 = new System.Windows.Forms.Label();
             this.B_fullData = new System.Windows.Forms.Button();
-            
             this.SuspendLayout();
             // 
             // label1
@@ -90,12 +88,12 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "PARAMETERS";
             // 
-            // progressBar1
+            // progressBar
             // 
-            this.progressBar1.Location = new System.Drawing.Point(326, 123);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(100, 23);
-            this.progressBar1.TabIndex = 5;
+            this.progressBar.Location = new System.Drawing.Point(326, 123);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(100, 23);
+            this.progressBar.TabIndex = 5;
             // 
             // T_minSupport
             // 
@@ -149,7 +147,7 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.T_minSupport);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.B_load);
             this.Controls.Add(this.label2);
@@ -157,7 +155,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Frame";
             this.Text = "Form1";
-
+            this.Load += new System.EventHandler(this.Frame_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -170,7 +168,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button B_load;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.TextBox T_minSupport;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.OpenFileDialog fileDialog;

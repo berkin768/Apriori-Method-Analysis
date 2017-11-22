@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DataMining
 {
@@ -14,17 +15,17 @@ namespace DataMining
         private static List<Entry> lines = null;
         private FileReader() { }
 
-        public static FileReader Instance(string fileName)
+        public static FileReader Instance(string fileName, ProgressBar progressBar)
         {
             if (fileReader == null)
             {
-                Create(fileName);
+                Create(fileName, progressBar);
             }
             return fileReader;
 
         }
 
-        private static void Create(string fileName)
+        private static void Create(string fileName, ProgressBar progressBar)
         {
             if (fileReader != null)
             {
@@ -32,14 +33,20 @@ namespace DataMining
             }
             lines = new List<Entry>();
             fileReader = new FileReader();
-            ReadFile(fileName);
+            ReadFile(fileName, progressBar);
         }
 
-        private static void ReadFile(string fileName)
+        private static void ReadFile(string fileName, ProgressBar progressBar)
         {
+            int progress = 0;
+            int id = 0; //TO WRITE HEADER NUMBERS
+            int size = File.ReadAllLines(fileName).Length;
+
 
             foreach (var line in File.ReadLines(fileName))
             {
+                progress++;
+                progressBar.Value = progress * 100 / size;
                 Entry entry = new Entry();
                 string[] words = line.Split(' ');
 
@@ -91,8 +98,9 @@ namespace DataMining
                     if(word.Contains("salary"))
                         entry.salary = word.Split('y')[1];//salary, after Y letter                  
                 }
-
+                entry.id = id;
                 lines.Add(entry);
+                id++;
             }
                     
             Console.WriteLine(lines); // <-- Shows file size in debugging mode.

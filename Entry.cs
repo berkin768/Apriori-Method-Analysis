@@ -8,6 +8,7 @@ namespace DataMining
 {
     public class Entry
     {
+        public int id { get; set; }
         public string age { get; set; }
         public string workClass { get; set; }
         public string education { get; set; }
