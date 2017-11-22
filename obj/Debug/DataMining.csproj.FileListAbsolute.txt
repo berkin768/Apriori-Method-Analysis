@@ -1,0 +1,10 @@
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\bin\Debug\DataMining.exe.config
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\bin\Debug\DataMining.exe
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\bin\Debug\DataMining.pdb
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Debug\DataMining.csprojResolveAssemblyReference.cache
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Debug\DataMining.B_load.resources
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Debug\DataMining.Properties.Resources.resources
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Debug\DataMining.csproj.GenerateResource.Cache
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Debug\DataMining.csproj.CoreCompileInputs.cache
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Debug\DataMining.exe
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Debug\DataMining.pdb
