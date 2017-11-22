@@ -16,6 +16,8 @@ namespace DataMining
     public partial class Frame : Form
     {
         static List<Entry> lines = null;
+        static List<AprioriOutput> aprioriLines = null;
+        FileReader fileReader = new FileReader();
         public Frame()
         {
             InitializeComponent();
@@ -59,8 +61,8 @@ namespace DataMining
             if (result == DialogResult.OK) // Test result.
             {
                 fileName = fileDialog.FileName;
-                var fileReader = FileReader.Instance(fileName, progressBar);
-                lines = fileReader.GetEntries;
+                fileReader.ReadFile(fileName, progressBar);                  
+                lines = fileReader.GetEntries().Cast<Entry>().ToList();
             }
             B_fullData.Enabled = true;
             B_supportedData.Enabled = true;
@@ -82,24 +84,64 @@ namespace DataMining
 
         private void B_supportedData_Click(object sender, EventArgs e)
         {
-            var aprioriProcess = new ProcessStartInfo();
-            aprioriProcess.UseShellExecute = true;
-            
+            var aprioriProcessInfo = new ProcessStartInfo();
+            aprioriProcessInfo.UseShellExecute = true;
+
+            string supportValue = T_minSupport.Text;
             string workingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string outputFile = "output.txt";
+
             int index = workingDirectory.IndexOf("bin");
             if (index > 0)
             {
                 workingDirectory = workingDirectory.Remove(index, 10);
             }
 
-            //proc1.WorkingDirectory = @"C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining";
-            aprioriProcess.WorkingDirectory = workingDirectory;
-            aprioriProcess.FileName = @"C:\Windows\System32\cmd.exe";
-            string command = "-s20 census.dat -";
-            aprioriProcess.Arguments = "/k apriori.exe " + command;
-            
+            if (File.Exists(workingDirectory + "/output.txt"))
+            {
+                File.Delete(workingDirectory + "/output.txt");
+            }
 
-            Process.Start(aprioriProcess);
+            //proc1.WorkingDirectory = @"C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining";
+            aprioriProcessInfo.WorkingDirectory = workingDirectory;
+            aprioriProcessInfo.FileName = @"C:\Windows\System32\cmd.exe";
+            
+            string command = "-s" + supportValue + " census.dat - >> " + outputFile;
+            aprioriProcessInfo.Arguments = "/c apriori.exe " + command;
+            
+            var aprioriProcess = Process.Start(aprioriProcessInfo);
+            aprioriProcess.WaitForExit();
+
+            string fileName = outputFile;
+            fileReader.ReadFile(workingDirectory + fileName);
+            aprioriLines = fileReader.GetEntries().Cast<AprioriOutput>().ToList();
+            List<AprioriOutput> sortedAprioriLines = aprioriLines.OrderByDescending(o => o.supportValue).ToList();
+
+
+            Form3 form3 = new Form3();
+            form3.Show();
+            var textBox = form3.getTextBox();
+
+            int counter = 0;
+            foreach (var aprioriOutputLine in sortedAprioriLines) {
+                counter++;
+                textBox.AppendText(counter + " " +
+                    " SUPPORT " + aprioriOutputLine.supportValue + "  {" +
+                    aprioriOutputLine.age + ", " +
+                    aprioriOutputLine.country + ", " +
+                    aprioriOutputLine.education + ", " +
+                    aprioriOutputLine.edu_num + ", " +
+                    aprioriOutputLine.gain + ", " +
+                    aprioriOutputLine.hours + ", " +
+                    aprioriOutputLine.loss + ", " +
+                    aprioriOutputLine.marital + ", " +
+                    aprioriOutputLine.occupation + ", " +
+                    aprioriOutputLine.race + ", " +
+                    aprioriOutputLine.relationship + ", " +
+                    aprioriOutputLine.salary + ", " +
+                    aprioriOutputLine.sex + ", " +
+                    aprioriOutputLine.workClass + " }"  + "\n");
+            }
         }
     }
 }

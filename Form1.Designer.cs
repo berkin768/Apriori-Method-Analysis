@@ -100,8 +100,7 @@
             // T_minSupport
             // 
             this.T_minSupport.Location = new System.Drawing.Point(63, 151);
-            this.T_minSupport.Name = "T_minSupport";
-            this.T_minSupport.ReadOnly = true;
+            this.T_minSupport.Name = "T_minSupport";         
             this.T_minSupport.Size = new System.Drawing.Size(100, 22);
             this.T_minSupport.TabIndex = 7;
             this.T_minSupport.Text = "20";

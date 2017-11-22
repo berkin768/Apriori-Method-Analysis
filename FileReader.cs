@@ -10,38 +10,17 @@ namespace DataMining
 {
     public class FileReader
     {
-        private static FileReader fileReader = null;
-        
-        private static List<Entry> lines = null;
-        private FileReader() { }
-
-        public static FileReader Instance(string fileName, ProgressBar progressBar)
-        {
-            if (fileReader == null)
-            {
-                Create(fileName, progressBar);
-            }
-            return fileReader;
-
+        private List<Object> lines = null;
+        public FileReader() {
+            
         }
 
-        private static void Create(string fileName, ProgressBar progressBar)
+        public void ReadFile(string fileName, ProgressBar progressBar)
         {
-            if (fileReader != null)
-            {
-                throw new Exception("Object already created");
-            }
-            lines = new List<Entry>();
-            fileReader = new FileReader();
-            ReadFile(fileName, progressBar);
-        }
-
-        private static void ReadFile(string fileName, ProgressBar progressBar)
-        {
+            lines = new List<Object>();
             int progress = 0;
             int id = 0; //TO WRITE HEADER NUMBERS
             int size = File.ReadAllLines(fileName).Length;
-
 
             foreach (var line in File.ReadLines(fileName))
             {
@@ -95,21 +74,85 @@ namespace DataMining
                             entry.country = word.Split('=')[1];
                             break;
                     }
-                    if(word.Contains("salary"))
+                    if (word.Contains("salary"))
                         entry.salary = word.Split('y')[1];//salary, after Y letter                  
                 }
                 entry.id = id;
                 lines.Add(entry);
                 id++;
-            }
-                    
-            Console.WriteLine(lines); // <-- Shows file size in debugging mode.
+            }   
         }
 
-        public List<Entry> GetEntries
+        public void ReadFile(string fileName)
         {
-            get { return lines; }
-            set { }
+            lines = new List<Object>();
+            foreach (var line in File.ReadLines(fileName))
+            { 
+                string[] words = line.Split(' ');
+                AprioriOutput aprioriEntry = new AprioriOutput();
+                foreach (var word in words)
+                {
+                    string tag = word.Split('=')[0];
+                    switch (tag)
+                    {
+                        case "age":
+                            aprioriEntry.age = word.Split('=')[1];
+                            break;
+                        case "workclass":
+                            aprioriEntry.workClass = word.Split('=')[1];
+                            break;
+                        case "education":
+                            aprioriEntry.education = word.Split('=')[1];
+                            break;
+                        case "edu_num":
+                            aprioriEntry.edu_num = word.Split('=')[1];
+                            break;
+                        case "marital":
+                            aprioriEntry.marital = word.Split('=')[1];
+                            break;
+                        case "occupation":
+                            aprioriEntry.occupation = word.Split('=')[1];
+                            break;
+                        case "relationship":
+                            aprioriEntry.relationship = word.Split('=')[1];
+                            break;
+                        case "race":
+                            aprioriEntry.race = word.Split('=')[1];
+                            break;
+                        case "sex":
+                            aprioriEntry.sex = word.Split('=')[1];
+                            break;
+                        case "gain":
+                            aprioriEntry.gain = word.Split('=')[1];
+                            break;
+                        case "loss":
+                            aprioriEntry.loss = word.Split('=')[1];
+                            break;
+                        case "hours":
+                            aprioriEntry.hours = word.Split('=')[1];
+                            break;
+                        case "country":
+                            aprioriEntry.country = word.Split('=')[1];
+                            break;
+                    }
+                    if (word.Contains("salary"))
+                        aprioriEntry.salary = word.Split('y')[1];//salary, after Y letter 
+                    if (word.Contains("("))
+                    {
+                        int startIndex = word.IndexOf('(') +1;
+                        int endIndex = word.IndexOf(')') -1;
+                        string test = word.Substring(startIndex, endIndex);
+                        aprioriEntry.supportValue = Convert.ToDouble(word.Substring(startIndex, endIndex));
+                    }
+                }
+                lines.Add(aprioriEntry);
+            }
         }
+
+
+        public List<Object> GetEntries()
+        {
+            return lines;
+        }   
     }
 }

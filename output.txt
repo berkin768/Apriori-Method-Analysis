@@ -1,0 +1,8 @@
+race=White (85.5043)
+race=White loss=none (81.3685)
+country=United-States (89.7424)
+country=United-States gain=none (82.1957)
+country=United-States loss=none (85.4838)
+gain=none (91.7387)
+gain=none loss=none (87.0665)
+loss=none (95.3278)
