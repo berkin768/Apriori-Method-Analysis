@@ -11,9 +11,10 @@ using System.Windows.Forms;
 
 namespace DataMining
 {
-    public partial class B_load : Form
-    {
-        public B_load()
+    public partial class Frame : Form
+    {       
+        static List<Entry> lines = null;
+        public Frame()
         {
             InitializeComponent();
         }
@@ -48,36 +49,27 @@ namespace DataMining
             }
         }
 
-        private void T_minSupport_TextChanged(object sender, EventArgs e)
-        {
 
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void B_load_Click(object sender, EventArgs e)
         {
-            int size = -1;
             DialogResult result = fileDialog.ShowDialog(); // Show the dialog.
             if (result == DialogResult.OK) // Test result.
             {
                 string file = fileDialog.FileName;
-                try
-                {
-                    string debug = File.ReadLines(file).First();
-                    string[] words = debug.Split(' ');
-                    List<string> list = new List<string>();
-                    foreach(var tag in words){
-                        list.Add(tag.Split('=')[0]);
-                    }
-                    Console.WriteLine(list); // <-- Shows file size in debugging mode.
-                    string text = File.ReadAllText(file);
-                    size = text.Length;
-                }
-                catch (IOException)
-                {
-                }
+                var fileReader = FileReader.Instance(file);
+                lines = fileReader.GetEntries;               
             }
-            Console.WriteLine(size); // <-- Shows file size in debugging mode.
-            Console.WriteLine(result); // <-- For debugging use.
         }
+
+        private void B_fullData_Click(object sender, EventArgs e)
+        {
+            Form newForm = new Form();
+            newForm.Show();
+            newForm.Text = "asd";
+
+       
+        }
+
+        
     }
 }

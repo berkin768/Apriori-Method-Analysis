@@ -1,6 +1,6 @@
 ﻿namespace DataMining
 {
-    partial class B_load
+    partial class Frame
     {
         /// <summary>
         ///Gerekli tasarımcı değişkeni.
@@ -28,15 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.T_partNumber = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.B_load = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.T_minSupport = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.fileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.label5 = new System.Windows.Forms.Label();
+            this.B_fullData = new System.Windows.Forms.Button();
+            
             this.SuspendLayout();
             // 
             // label1
@@ -66,15 +70,15 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Load Data";
             // 
-            // button1
+            // B_load
             // 
-            this.button1.Location = new System.Drawing.Point(338, 94);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Load";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.B_load.Location = new System.Drawing.Point(338, 94);
+            this.B_load.Name = "B_load";
+            this.B_load.Size = new System.Drawing.Size(75, 23);
+            this.B_load.TabIndex = 3;
+            this.B_load.Text = "Load";
+            this.B_load.UseVisualStyleBackColor = true;
+            this.B_load.Click += new System.EventHandler(this.B_load_Click);
             // 
             // label3
             // 
@@ -102,7 +106,6 @@
             this.T_minSupport.TabIndex = 7;
             this.T_minSupport.Text = "20";
             this.T_minSupport.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.T_minSupport.TextChanged += new System.EventHandler(this.T_minSupport_TextChanged);
             this.T_minSupport.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.T_minSupport_KeyPress);
             // 
             // label4
@@ -118,21 +121,43 @@
             // 
             this.fileDialog.FileName = "openFileDialog1";
             // 
-            // B_load
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(60, 221);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(93, 17);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "See Full Data";
+            // 
+            // B_fullData
+            // 
+            this.B_fullData.Location = new System.Drawing.Point(63, 241);
+            this.B_fullData.Name = "B_fullData";
+            this.B_fullData.Size = new System.Drawing.Size(90, 29);
+            this.B_fullData.TabIndex = 9;
+            this.B_fullData.Text = "View Full";
+            this.B_fullData.UseVisualStyleBackColor = true;
+            this.B_fullData.Click += new System.EventHandler(this.B_fullData_Click);
+            // 
+            // Frame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(693, 401);
+            this.Controls.Add(this.B_fullData);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.T_minSupport);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.B_load);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.T_partNumber);
             this.Controls.Add(this.label1);
-            this.Name = "B_load";
+            this.Name = "Frame";
             this.Text = "Form1";
+
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -143,12 +168,14 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox T_partNumber;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button B_load;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.TextBox T_minSupport;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.OpenFileDialog fileDialog;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button B_fullData;
     }
 }
 

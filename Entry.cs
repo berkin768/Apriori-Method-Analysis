@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace DataMining
 {
-    class Entry
+    public class Entry
     {
-        string age { get; set; }
-        string workClass { get; set; }
-        string education { get; set; }
-        int edu_num { get; set; }
-        string martial { get; set; }
-        string occupation { get; set; }
-        string relationship { get; set; }
-        string race { get; set; }
-        string sex { get; set; }
-        string gain { get; set; }
-        string loss { get; set; }
-        string hours { get; set; }
-        string country { get; set; }
-        string salary { get; set; }
+        public string age { get; set; }
+        public string workClass { get; set; }
+        public string education { get; set; }
+        public string edu_num { get; set; }
+        public string marital { get; set; }
+        public string occupation { get; set; }
+        public string relationship { get; set; }
+        public string race { get; set; }
+        public string sex { get; set; }
+        public string gain { get; set; }
+        public string loss { get; set; }
+        public string hours { get; set; }
+        public string country { get; set; }
+        public string salary { get; set; }
     }
 }

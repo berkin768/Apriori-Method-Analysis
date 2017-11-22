@@ -16,7 +16,7 @@ namespace DataMining
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new B_load());
+            Application.Run(new Frame());
         }
     }
 }
