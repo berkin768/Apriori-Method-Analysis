@@ -1,0 +1,12 @@
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\bin\Release\Apriori Analysis.exe.config
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\bin\Release\Apriori Analysis.exe
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\bin\Release\Apriori Analysis.pdb
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Release\DataMining.Frame.resources
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Release\DataMining.Form2.resources
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Release\DataMining.Form3.resources
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Release\DataMining.Form4.resources
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Release\DataMining.Properties.Resources.resources
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Release\DataMining.csproj.GenerateResource.Cache
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Release\DataMining.csproj.CoreCompileInputs.cache
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Release\Apriori Analysis.exe
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Release\Apriori Analysis.pdb

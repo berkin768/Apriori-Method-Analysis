@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form3));
             this.T_outputBox = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
@@ -39,7 +40,7 @@
             this.T_outputBox.Location = new System.Drawing.Point(0, -1);
             this.T_outputBox.Name = "T_outputBox";
             this.T_outputBox.ReadOnly = true;
-            this.T_outputBox.Size = new System.Drawing.Size(885, 467);
+            this.T_outputBox.Size = new System.Drawing.Size(881, 454);
             this.T_outputBox.TabIndex = 0;
             this.T_outputBox.Text = "";
             // 
@@ -47,10 +48,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(886, 466);
+            this.ClientSize = new System.Drawing.Size(882, 453);
             this.Controls.Add(this.T_outputBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form3";
-            this.Text = "Form3";
+            this.Text = "Data With Support";
             this.ResumeLayout(false);
 
         }

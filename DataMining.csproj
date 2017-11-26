@@ -7,7 +7,7 @@
     <ProjectGuid>{8BC8ADBF-0DBB-4A88-8173-A2DE2D983D18}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>DataMining</RootNamespace>
-    <AssemblyName>DataMining</AssemblyName>
+    <AssemblyName>Apriori Analysis</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -30,6 +30,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>analytics.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -95,6 +98,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="census.dat" />
     <None Include="Properties\DataSources\AprioriOutput.datasource" />
@@ -115,6 +119,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="analytics.ico" />
     <Content Include="apriori.exe" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

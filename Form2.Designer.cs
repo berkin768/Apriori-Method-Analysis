@@ -34,7 +34,7 @@ namespace DataMining
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.entryBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,13 +51,10 @@ namespace DataMining
             this.hoursDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.countryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.salaryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.entryBindingSource)).BeginInit();
+            this.entryBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.entryBindingSource)).BeginInit();
             this.SuspendLayout();
-            // 
-            // entryBindingSource
-            // 
-            this.entryBindingSource.DataSource = typeof(DataMining.Entry);
             // 
             // dataGridView1
             // 
@@ -87,7 +84,7 @@ namespace DataMining
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1064, 446);
+            this.dataGridView1.Size = new System.Drawing.Size(1006, 721);
             this.dataGridView1.TabIndex = 0;
             // 
             // idDataGridViewTextBoxColumn
@@ -195,16 +192,21 @@ namespace DataMining
             this.salaryDataGridViewTextBoxColumn.Name = "salaryDataGridViewTextBoxColumn";
             this.salaryDataGridViewTextBoxColumn.ReadOnly = true;
             // 
+            // entryBindingSource
+            // 
+            this.entryBindingSource.DataSource = typeof(DataMining.Entry);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1064, 446);
+            this.ClientSize = new System.Drawing.Size(1006, 721);
             this.Controls.Add(this.dataGridView1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form2";
-            this.Text = "Data";
-            ((System.ComponentModel.ISupportInitialize)(this.entryBindingSource)).EndInit();
+            this.Text = "Full Data View";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.entryBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }

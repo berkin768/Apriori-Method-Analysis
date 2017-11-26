@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frame));
             this.label1 = new System.Windows.Forms.Label();
             this.T_partNumber = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -195,7 +196,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(693, 401);
+            this.ClientSize = new System.Drawing.Size(684, 357);
             this.Controls.Add(this.progressSeperated);
             this.Controls.Add(this.B_seperatedData);
             this.Controls.Add(this.label7);
@@ -211,8 +212,9 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.T_partNumber);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Frame";
-            this.Text = "Form1";
+            this.Text = "Apriori Method Analysis";
             this.Load += new System.EventHandler(this.Frame_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

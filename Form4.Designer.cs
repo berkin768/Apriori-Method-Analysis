@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form4));
             this.T_outputBox = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
@@ -35,7 +36,7 @@
             // 
             this.T_outputBox.Location = new System.Drawing.Point(0, 0);
             this.T_outputBox.Name = "T_outputBox";
-            this.T_outputBox.Size = new System.Drawing.Size(805, 472);
+            this.T_outputBox.Size = new System.Drawing.Size(881, 452);
             this.T_outputBox.TabIndex = 0;
             this.T_outputBox.Text = "";
             // 
@@ -43,10 +44,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(805, 472);
+            this.ClientSize = new System.Drawing.Size(882, 453);
             this.Controls.Add(this.T_outputBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form4";
-            this.Text = "Form4";
+            this.Text = "Multiple File Analysis";
             this.ResumeLayout(false);
 
         }
