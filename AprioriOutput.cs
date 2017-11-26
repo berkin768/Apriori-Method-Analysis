@@ -9,5 +9,7 @@ namespace DataMining
     public class AprioriOutput : Entry
     {
         public double supportValue { get; set; }
+
+        public int fileId { get; set; }
     }
 }

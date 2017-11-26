@@ -168,10 +168,48 @@ namespace DataMining
             rawData = fileReader.GetEntries().Cast<string>().ToList();
 
             seperateFile(rawData);
-
-
+            getSupportValuesFromFiles();
+            
         }
 
+
+        private void getSupportValuesFromFiles()
+        {
+            string filesToDelete = @"outputCSV*.txt";
+            deleteFile(filesToDelete);            
+
+            string filesToProcess = @"census*.csv";
+            int fileId = 1;
+            string workingDirectory = getDirectory();
+            string[] fileList = Directory.GetFiles(workingDirectory, filesToProcess);
+
+            foreach (string file in fileList)
+            {
+                var aprioriProcessInfo = new ProcessStartInfo();
+                aprioriProcessInfo.UseShellExecute = true;
+
+                string supportValue = T_minSupport.Text;                
+                string outputFile = "outputCSV" + fileId + ".txt";
+
+                //proc1.WorkingDirectory = @"C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining";
+                aprioriProcessInfo.WorkingDirectory = workingDirectory;
+                aprioriProcessInfo.FileName = @"C:\Windows\System32\cmd.exe";
+
+                string command = "-s" + supportValue + " census" + fileId + ".csv" + " - >> " + outputFile;
+                aprioriProcessInfo.Arguments = "/c apriori.exe " + command;
+
+                var aprioriProcess = Process.Start(aprioriProcessInfo);
+                aprioriProcess.WaitForExit();
+                fileId++;
+            }
+        }
+
+        private void analyseSupportedFiles()
+        {
+            string filesToProcess = @"outputCSV*.txt";
+        }
+
+        //---------------------------BELOW FUNCTIONS TO SEPERATE CSV FILES INTO ONE .DAT FILE------------------------
         private void deleteFile(string fileToDelete)
         {
             string workingDirectory = getDirectory();
