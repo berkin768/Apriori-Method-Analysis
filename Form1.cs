@@ -383,7 +383,7 @@ namespace DataMining
             int index = workingDirectory.IndexOf("bin");
             if (index > 0)
             {
-                workingDirectory = workingDirectory.Remove(index, 10);
+                workingDirectory = workingDirectory.Remove(index, workingDirectory.Length-index);
             }
 
             return workingDirectory;
