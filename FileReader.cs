@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -149,6 +150,13 @@ namespace DataMining
             }
         }
 
+        public void ReadRawFile(string fileName) {
+            lines = new List<Object>();
+            foreach (var line in File.ReadLines(fileName)) {
+                lines.Add(line);
+            }
+                 
+        }
 
         public List<Object> GetEntries()
         {

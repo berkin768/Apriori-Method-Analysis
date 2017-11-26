@@ -18,7 +18,10 @@ namespace DataMining
     {
         static List<Entry> lines = null;
         static List<AprioriOutput> aprioriLines = null;
+        static List<String> rawData = null;
         FileReader fileReader = new FileReader();
+        static string fileName = null;
+
         public Frame()
         {
             InitializeComponent();
@@ -37,6 +40,20 @@ namespace DataMining
             {
                 e.Handled = true;
             }
+
+            if (T_partNumber.Text.Length >= 2)
+            {
+                int acceptednumber = Convert.ToInt32(T_partNumber.Text);
+                if (acceptednumber < 0)
+                {
+                    e.Handled = true;
+                }
+                else
+                {
+                    T_partNumber.Text = T_partNumber.Text;
+                }
+            }
+
         }
 
         private void T_minSupport_KeyPress(object sender, KeyPressEventArgs e)
@@ -57,12 +74,12 @@ namespace DataMining
 
         private void B_load_Click(object sender, EventArgs e)
         {
-            string fileName = null;
+            fileName = null;
             DialogResult result = fileDialog.ShowDialog(); // Show the dialog.
             if (result == DialogResult.OK) // Test result.
             {
                 fileName = fileDialog.FileName;
-                fileReader.ReadFile(fileName, progressBar);                  
+                fileReader.ReadFile(fileName, progressBar);
                 lines = fileReader.GetEntries().Cast<Entry>().ToList();
             }
             B_fullData.Enabled = true;
@@ -89,32 +106,22 @@ namespace DataMining
             aprioriProcessInfo.UseShellExecute = true;
 
             string supportValue = T_minSupport.Text;
-            string workingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string workingDirectory = getDirectory();
             string outputFile = "output.txt";
 
-            int index = workingDirectory.IndexOf("bin");
-            if (index > 0)
-            {
-                workingDirectory = workingDirectory.Remove(index, 10);
-            }
-
-            if (File.Exists(workingDirectory + "/output.txt"))
-            {
-                File.Delete(workingDirectory + "/output.txt");
-            }
 
             //proc1.WorkingDirectory = @"C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining";
             aprioriProcessInfo.WorkingDirectory = workingDirectory;
             aprioriProcessInfo.FileName = @"C:\Windows\System32\cmd.exe";
-            
+
             string command = "-s" + supportValue + " census.dat - >> " + outputFile;
             aprioriProcessInfo.Arguments = "/c apriori.exe " + command;
-            
+
             var aprioriProcess = Process.Start(aprioriProcessInfo);
             aprioriProcess.WaitForExit();
 
-            string fileName = outputFile;
-            fileReader.ReadFile(workingDirectory + fileName);
+
+            fileReader.ReadFile(workingDirectory + outputFile);
             aprioriLines = fileReader.GetEntries().Cast<AprioriOutput>().ToList();
             List<AprioriOutput> sortedAprioriLines = aprioriLines.OrderByDescending(o => o.supportValue).ToList();
 
@@ -124,21 +131,22 @@ namespace DataMining
             var textBox = form3.getTextBox();
 
             int counter = 0;
-          
-            foreach (var aprioriOutputLine in sortedAprioriLines) {
+
+            foreach (var aprioriOutputLine in sortedAprioriLines)
+            {
                 string output = "";
                 output += counter + " ";
                 output += " SUPPORT " + aprioriOutputLine.supportValue + "  {";
-                output += (!string.IsNullOrEmpty(aprioriOutputLine.age)) ?  aprioriOutputLine.age : "*,";
+                output += (!string.IsNullOrEmpty(aprioriOutputLine.age)) ? aprioriOutputLine.age : "*,";
                 output += (!string.IsNullOrEmpty(aprioriOutputLine.country)) ? "," + aprioriOutputLine.country : "*,";
                 output += (!string.IsNullOrEmpty(aprioriOutputLine.education)) ? "," + aprioriOutputLine.education : "*,";
                 output += (!string.IsNullOrEmpty(aprioriOutputLine.edu_num)) ? "," + aprioriOutputLine.edu_num : "*,";
                 output += (!string.IsNullOrEmpty(aprioriOutputLine.gain)) ? "," + aprioriOutputLine.gain : "*,";
-                output += (!string.IsNullOrEmpty(aprioriOutputLine.hours)) ? "," + aprioriOutputLine.hours: "*,";
+                output += (!string.IsNullOrEmpty(aprioriOutputLine.hours)) ? "," + aprioriOutputLine.hours : "*,";
                 output += (!string.IsNullOrEmpty(aprioriOutputLine.loss)) ? "," + aprioriOutputLine.loss : "*,";
                 output += (!string.IsNullOrEmpty(aprioriOutputLine.marital)) ? "," + aprioriOutputLine.marital : "*,";
-                output += (!string.IsNullOrEmpty(aprioriOutputLine.occupation)) ? "," + aprioriOutputLine.occupation  : "*,";
-                output += (!string.IsNullOrEmpty(aprioriOutputLine.race)) ? "," + aprioriOutputLine.race  : "*,";
+                output += (!string.IsNullOrEmpty(aprioriOutputLine.occupation)) ? "," + aprioriOutputLine.occupation : "*,";
+                output += (!string.IsNullOrEmpty(aprioriOutputLine.race)) ? "," + aprioriOutputLine.race : "*,";
                 output += (!string.IsNullOrEmpty(aprioriOutputLine.relationship)) ? "," + aprioriOutputLine.relationship : "*,";
                 output += (!string.IsNullOrEmpty(aprioriOutputLine.salary)) ? "," + aprioriOutputLine.salary : "*,";
                 output += (!string.IsNullOrEmpty(aprioriOutputLine.sex)) ? "," + aprioriOutputLine.sex : "*,";
@@ -152,6 +160,82 @@ namespace DataMining
                 output = sb.ToString();
                 textBox.AppendText(output);
             }
+        }
+
+        private void B_seperatedData_Click(object sender, EventArgs e)
+        {
+            fileReader.ReadRawFile(fileName);
+            rawData = fileReader.GetEntries().Cast<string>().ToList();
+
+            seperateFile(rawData);
+
+
+        }
+
+        
+
+        private void seperateFile(List<string>rawData)
+        {
+
+            
+
+            int partNumber = Convert.ToInt32(T_partNumber.Text);
+            int fileSize = rawData.Count;
+
+            int indexSize = fileSize / partNumber;
+
+            string workingDirectory = getDirectory();
+            progressSeperated.Value = 0;
+            int progress = 0;
+            for (int i = 1; i <= partNumber; i++)
+            {
+                string fileName = workingDirectory + "census" + i + ".csv";
+                List<String> seperatedList = seperateList(rawData, indexSize, i);
+
+                CreateCSVFile(seperatedList, fileName);
+                progress += 100 / partNumber;
+                progressSeperated.Value = progress;
+            }
+        }
+
+        private List<string> seperateList(List<string> input, int splitSize, int loopIndex)
+        {
+            int endIndex = splitSize * loopIndex;  //For example 1000*2. This means seperate array by 2000-1000 For example
+            int startIndex = endIndex - splitSize;  //endIndex = 2000, startIndex = 1000 for example
+
+            List<string> output = new List<string>();
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                output.Add(input.ElementAt(i));
+            }
+
+            return output;
+        }
+
+        private string getDirectory()
+        {
+            string workingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            int index = workingDirectory.IndexOf("bin");
+            if (index > 0)
+            {
+                workingDirectory = workingDirectory.Remove(index, 10);
+            }
+
+            return workingDirectory;
+        }
+
+        private void CreateCSVFile(List<String> input, string fileName)
+        {
+            
+            StreamWriter sw = new StreamWriter(fileName);
+            foreach (var line in input)
+            {
+                string outputLine = line.Replace(' ', ',');
+                             
+                sw.WriteLine(outputLine);
+            }
+            sw.Flush();
+            sw.Close();
         }
     }
 }

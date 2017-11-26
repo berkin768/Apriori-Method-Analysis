@@ -41,6 +41,9 @@
             this.B_fullData = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.B_supportedData = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.B_seperatedData = new System.Windows.Forms.Button();
+            this.progressSeperated = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // label1
@@ -58,13 +61,14 @@
             this.T_partNumber.Name = "T_partNumber";
             this.T_partNumber.Size = new System.Drawing.Size(100, 22);
             this.T_partNumber.TabIndex = 1;
+            this.T_partNumber.Text = "1";
             this.T_partNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.T_partNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.T_partNumber_KeyPress);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(335, 73);
+            this.label2.Location = new System.Drawing.Point(305, 73);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(74, 17);
             this.label2.TabIndex = 2;
@@ -72,7 +76,7 @@
             // 
             // B_load
             // 
-            this.B_load.Location = new System.Drawing.Point(338, 94);
+            this.B_load.Location = new System.Drawing.Point(308, 94);
             this.B_load.Name = "B_load";
             this.B_load.Size = new System.Drawing.Size(75, 23);
             this.B_load.TabIndex = 3;
@@ -92,15 +96,18 @@
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(326, 123);
+            this.progressBar.Location = new System.Drawing.Point(296, 123);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(100, 23);
+            this.progressBar.Step = 1;
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar.TabIndex = 5;
+            this.progressBar.Tag = "";
             // 
             // T_minSupport
             // 
             this.T_minSupport.Location = new System.Drawing.Point(63, 151);
-            this.T_minSupport.Name = "T_minSupport";         
+            this.T_minSupport.Name = "T_minSupport";
             this.T_minSupport.Size = new System.Drawing.Size(100, 22);
             this.T_minSupport.TabIndex = 7;
             this.T_minSupport.Text = "20";
@@ -123,7 +130,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(511, 74);
+            this.label5.Location = new System.Drawing.Point(508, 67);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(93, 17);
             this.label5.TabIndex = 8;
@@ -131,7 +138,7 @@
             // 
             // B_fullData
             // 
-            this.B_fullData.Location = new System.Drawing.Point(514, 94);
+            this.B_fullData.Location = new System.Drawing.Point(511, 87);
             this.B_fullData.Name = "B_fullData";
             this.B_fullData.Size = new System.Drawing.Size(90, 29);
             this.B_fullData.TabIndex = 9;
@@ -142,7 +149,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(49, 247);
+            this.label6.Location = new System.Drawing.Point(497, 133);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(124, 17);
             this.label6.TabIndex = 10;
@@ -150,7 +157,7 @@
             // 
             // B_supportedData
             // 
-            this.B_supportedData.Location = new System.Drawing.Point(63, 267);
+            this.B_supportedData.Location = new System.Drawing.Point(511, 153);
             this.B_supportedData.Name = "B_supportedData";
             this.B_supportedData.Size = new System.Drawing.Size(90, 29);
             this.B_supportedData.TabIndex = 11;
@@ -158,11 +165,40 @@
             this.B_supportedData.UseVisualStyleBackColor = true;
             this.B_supportedData.Click += new System.EventHandler(this.B_supportedData_Click);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(475, 199);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(177, 17);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Support In Seperated Data";
+            // 
+            // B_seperatedData
+            // 
+            this.B_seperatedData.Location = new System.Drawing.Point(511, 219);
+            this.B_seperatedData.Name = "B_seperatedData";
+            this.B_seperatedData.Size = new System.Drawing.Size(90, 29);
+            this.B_seperatedData.TabIndex = 13;
+            this.B_seperatedData.Text = "View Data";
+            this.B_seperatedData.UseVisualStyleBackColor = true;
+            this.B_seperatedData.Click += new System.EventHandler(this.B_seperatedData_Click);
+            // 
+            // progressSeperated
+            // 
+            this.progressSeperated.Location = new System.Drawing.Point(500, 254);
+            this.progressSeperated.Name = "progressSeperated";
+            this.progressSeperated.Size = new System.Drawing.Size(112, 23);
+            this.progressSeperated.TabIndex = 14;
+            // 
             // Frame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(693, 401);
+            this.Controls.Add(this.progressSeperated);
+            this.Controls.Add(this.B_seperatedData);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.B_supportedData);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.B_fullData);
@@ -198,6 +234,9 @@
         private System.Windows.Forms.Button B_fullData;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button B_supportedData;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button B_seperatedData;
+        private System.Windows.Forms.ProgressBar progressSeperated;
     }
 }
 
