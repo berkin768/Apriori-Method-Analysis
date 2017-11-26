@@ -83,8 +83,9 @@ namespace DataMining
                 id++;
             }   
         }
-
-        public void ReadFile(string fileName)
+   
+       
+        public void ReadFile(string fileName) //TO READ SUPPORTED FILES
         {
             lines = new List<Object>();
             foreach (var line in File.ReadLines(fileName))
@@ -144,10 +145,27 @@ namespace DataMining
                         int endIndex = word.IndexOf(')') -1;
                         string test = word.Substring(startIndex, endIndex);
                         aprioriEntry.supportValue = Convert.ToDouble(word.Substring(startIndex, endIndex).Replace('.',','));
-                    }
+                    }                
                 }
+                aprioriEntry.rawLine = line;
+                
+                Console.WriteLine(fileName);
+                if (fileName.Contains("CSV")) {
+                    int fileId = getFileIDFromFileName(fileName);
+                    aprioriEntry.fileId = fileId;
+                }
+                
                 lines.Add(aprioriEntry);
             }
+        }
+
+        private int getFileIDFromFileName(string fileName)
+        {           
+            int startIndex = fileName.IndexOf("CSV") +3;           
+            int endIndex = fileName.IndexOf(".txt") + 3;
+            int fileId = Convert.ToInt32(fileName.Substring(startIndex, fileName.Length - endIndex));
+
+            return fileId;
         }
 
         public void ReadRawFile(string fileName) {

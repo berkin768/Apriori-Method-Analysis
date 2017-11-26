@@ -109,6 +109,7 @@ namespace DataMining
             string workingDirectory = getDirectory();
             string outputFile = "output.txt";
 
+            deleteFile(outputFile);
 
             //proc1.WorkingDirectory = @"C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining";
             aprioriProcessInfo.WorkingDirectory = workingDirectory;
@@ -169,7 +170,7 @@ namespace DataMining
 
             seperateFile(rawData);
             getSupportValuesFromFiles();
-            
+            analyseSupportedFiles();
         }
 
 
@@ -206,7 +207,16 @@ namespace DataMining
 
         private void analyseSupportedFiles()
         {
+            string workingDirectory = getDirectory();
             string filesToProcess = @"outputCSV*.txt";
+            string[] fileList = Directory.GetFiles(workingDirectory, filesToProcess);
+
+            List<AprioriOutput> supportedFiles = new List<AprioriOutput>();
+
+            foreach(var file in fileList){
+                fileReader.ReadFile(file);
+                supportedFiles.AddRange(fileReader.GetEntries().Cast<AprioriOutput>().ToList());
+            }
         }
 
         //---------------------------BELOW FUNCTIONS TO SEPERATE CSV FILES INTO ONE .DAT FILE------------------------

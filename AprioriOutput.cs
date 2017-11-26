@@ -11,5 +11,7 @@ namespace DataMining
         public double supportValue { get; set; }
 
         public int fileId { get; set; }
+
+        public string rawLine { get; set; }
     }
 }
