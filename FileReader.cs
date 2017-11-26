@@ -20,7 +20,7 @@ namespace DataMining
         {
             lines = new List<Object>();
             int progress = 0;
-            int id = 0; //TO WRITE HEADER NUMBERS
+            int id = 1; //TO WRITE HEADER NUMBERS
             int size = File.ReadAllLines(fileName).Length;
 
             foreach (var line in File.ReadLines(fileName))

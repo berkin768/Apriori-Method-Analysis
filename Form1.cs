@@ -143,8 +143,9 @@ namespace DataMining
             foreach (var line in input)
             {
                 string output = "";
-                output += counter + " ";
-                output += " SUPPORT " + line.supportValue + "  {";
+                AppendText(textBox, counter + " ", Color.Red, new Font("Arial", 10));
+                AppendText(textBox, " SUPPORT " + line.supportValue , Color.Blue, new Font("Arial", 10));
+                output += " {";
                 output += (!string.IsNullOrEmpty(line.age)) ? line.age : "*,";
                 output += (!string.IsNullOrEmpty(line.country)) ? "," + line.country : "*,";
                 output += (!string.IsNullOrEmpty(line.education)) ? "," + line.education : "*,";
@@ -170,13 +171,26 @@ namespace DataMining
             }
         }
 
+        public void AppendText(RichTextBox box, string text, Color color, Font font)
+        {
+            box.SelectionStart = box.TextLength;
+            box.SelectionLength = 0;
+
+            box.SelectionColor = color;
+            box.SelectionFont = font;
+            box.AppendText(text);
+            box.SelectionColor = box.ForeColor;
+        }
+
         private void printDistinctAprioriOutputListToRichText(List<DistinctAprioriOutput> input, RichTextBox textBox)
         {
             int counter = 1;
             foreach (var line in input)
             {
+               
+
                 string output = "";
-                output += counter + " ";
+                AppendText(textBox, counter + " ", Color.Red, new Font("Arial", 10));
                 output += "{";
                 output += (!string.IsNullOrEmpty(line.age)) ? line.age : "*,";
                 output += (!string.IsNullOrEmpty(line.country)) ? "," + line.country : "*,";
@@ -195,16 +209,18 @@ namespace DataMining
                 output += "} ";
                 foreach(var fileId in line.fileIDs)
                 {
-                    output += fileId + ", ";
+                    AppendText(textBox, fileId + ", ", Color.Blue, new Font("Arial", 10));
+                    //output += fileId + ", ";
                 }
                 output += "\n";
                 counter++;
 
                 StringBuilder sb = new StringBuilder(output);
                 sb.Replace("*,", "");
-                sb.Replace("{,", "{");
+                sb.Replace("{,", "{");            
                 output = sb.ToString();
-                textBox.AppendText(output);
+                //textBox.AppendText(output);
+                AppendText(textBox, output, Color.Black, new Font("Arial", 10));
             }
         }
 
@@ -217,7 +233,6 @@ namespace DataMining
             getSupportValuesFromFiles();
             analyseSupportedFiles();
         }
-
 
         private void getSupportValuesFromFiles()
         {
