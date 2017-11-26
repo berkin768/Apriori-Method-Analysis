@@ -172,19 +172,28 @@ namespace DataMining
 
         }
 
-        
-
-        private void seperateFile(List<string>rawData)
+        private void deleteFile(string fileToDelete)
         {
+            string workingDirectory = getDirectory();
+            string[] fileList = Directory.GetFiles(workingDirectory, fileToDelete);
+            foreach (string file in fileList)
+            {
+                File.Delete(file);
+            }
+        }
 
-            
+        private void seperateFile(List<string> rawData)
+        {
+            string filesToDelete = @"census*.csv";
+            deleteFile(filesToDelete);
 
-            int partNumber = Convert.ToInt32(T_partNumber.Text);
-            int fileSize = rawData.Count;
+            double partNumber = Convert.ToDouble(T_partNumber.Text);
+            double fileSize = rawData.Count;
 
-            int indexSize = fileSize / partNumber;
+            int indexSize = Convert.ToInt32(Math.Ceiling(fileSize / partNumber));
 
             string workingDirectory = getDirectory();
+
             progressSeperated.Value = 0;
             int progress = 0;
             for (int i = 1; i <= partNumber; i++)
@@ -193,7 +202,7 @@ namespace DataMining
                 List<String> seperatedList = seperateList(rawData, indexSize, i);
 
                 CreateCSVFile(seperatedList, fileName);
-                progress += 100 / partNumber;
+                progress += 100 / Convert.ToInt32(partNumber);
                 progressSeperated.Value = progress;
             }
         }
@@ -206,7 +215,8 @@ namespace DataMining
             List<string> output = new List<string>();
             for (int i = startIndex; i < endIndex; i++)
             {
-                output.Add(input.ElementAt(i));
+                if (input.Count > i)
+                    output.Add(input.ElementAt(i));
             }
 
             return output;
@@ -226,12 +236,12 @@ namespace DataMining
 
         private void CreateCSVFile(List<String> input, string fileName)
         {
-            
+
             StreamWriter sw = new StreamWriter(fileName);
             foreach (var line in input)
             {
                 string outputLine = line.Replace(' ', ',');
-                             
+
                 sw.WriteLine(outputLine);
             }
             sw.Flush();
