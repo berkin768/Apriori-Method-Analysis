@@ -10,3 +10,4 @@ C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\D
 C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Debug\DataMining.Frame.resources
 C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Debug\DataMining.Form2.resources
 C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Debug\DataMining.Form3.resources
+C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining\obj\Debug\DataMining.Form4.resources

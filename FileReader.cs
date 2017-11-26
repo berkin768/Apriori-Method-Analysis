@@ -159,6 +159,69 @@ namespace DataMining
             }
         }
 
+        public void ReadList(List<DistinctAprioriOutput>input)
+        {
+            lines = new List<Object>();
+            foreach (var line in input)
+            {
+                string[] words = line.rawLine.Split(' ');
+                DistinctAprioriOutput aprioriEntry = new DistinctAprioriOutput();
+                foreach (var word in words)
+                {
+                    string tag = word.Split('=')[0];
+                    switch (tag)
+                    {
+                        case "age":
+                            aprioriEntry.age = word.Split('=')[1];
+                            break;
+                        case "workclass":
+                            aprioriEntry.workClass = word.Split('=')[1];
+                            break;
+                        case "education":
+                            aprioriEntry.education = word.Split('=')[1];
+                            break;
+                        case "edu_num":
+                            aprioriEntry.edu_num = word.Split('=')[1];
+                            break;
+                        case "marital":
+                            aprioriEntry.marital = word.Split('=')[1];
+                            break;
+                        case "occupation":
+                            aprioriEntry.occupation = word.Split('=')[1];
+                            break;
+                        case "relationship":
+                            aprioriEntry.relationship = word.Split('=')[1];
+                            break;
+                        case "race":
+                            aprioriEntry.race = word.Split('=')[1];
+                            break;
+                        case "sex":
+                            aprioriEntry.sex = word.Split('=')[1];
+                            break;
+                        case "gain":
+                            aprioriEntry.gain = word.Split('=')[1];
+                            break;
+                        case "loss":
+                            aprioriEntry.loss = word.Split('=')[1];
+                            break;
+                        case "hours":
+                            aprioriEntry.hours = word.Split('=')[1];
+                            break;
+                        case "country":
+                            aprioriEntry.country = word.Split('=')[1];
+                            break;
+                    }
+                    if (word.Contains("salary"))
+                        aprioriEntry.salary = word.Split('y')[1];//salary, after Y letter              
+                    
+                }
+                aprioriEntry.duplicateCount = line.duplicateCount;
+                aprioriEntry.fileIDs = new List<int>();
+                aprioriEntry.fileIDs = line.fileIDs;
+                lines.Add(aprioriEntry);
+            }
+        }
+
         private int getFileIDFromFileName(string fileName)
         {           
             int startIndex = fileName.IndexOf("CSV") +3;           

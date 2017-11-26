@@ -84,6 +84,7 @@ namespace DataMining
             }
             B_fullData.Enabled = true;
             B_supportedData.Enabled = true;
+            B_seperatedData.Enabled = true;
         }
 
         private void B_fullData_Click(object sender, EventArgs e)
@@ -97,7 +98,8 @@ namespace DataMining
         private void Frame_Load(object sender, EventArgs e)
         {
             B_fullData.Enabled = false;
-            B_supportedData.Enabled = false;
+            B_supportedData.Enabled = false;        
+            B_seperatedData.Enabled = false;
         }
 
         private void B_supportedData_Click(object sender, EventArgs e)
@@ -131,28 +133,71 @@ namespace DataMining
             form3.Show();
             var textBox = form3.getTextBox();
 
-            int counter = 0;
 
-            foreach (var aprioriOutputLine in sortedAprioriLines)
+            printAprioriOutputListToRichText(sortedAprioriLines, textBox);
+        }
+
+        private void printAprioriOutputListToRichText(List<AprioriOutput> input,RichTextBox textBox)
+        {
+            int counter = 1;
+            foreach (var line in input)
             {
                 string output = "";
                 output += counter + " ";
-                output += " SUPPORT " + aprioriOutputLine.supportValue + "  {";
-                output += (!string.IsNullOrEmpty(aprioriOutputLine.age)) ? aprioriOutputLine.age : "*,";
-                output += (!string.IsNullOrEmpty(aprioriOutputLine.country)) ? "," + aprioriOutputLine.country : "*,";
-                output += (!string.IsNullOrEmpty(aprioriOutputLine.education)) ? "," + aprioriOutputLine.education : "*,";
-                output += (!string.IsNullOrEmpty(aprioriOutputLine.edu_num)) ? "," + aprioriOutputLine.edu_num : "*,";
-                output += (!string.IsNullOrEmpty(aprioriOutputLine.gain)) ? "," + aprioriOutputLine.gain : "*,";
-                output += (!string.IsNullOrEmpty(aprioriOutputLine.hours)) ? "," + aprioriOutputLine.hours : "*,";
-                output += (!string.IsNullOrEmpty(aprioriOutputLine.loss)) ? "," + aprioriOutputLine.loss : "*,";
-                output += (!string.IsNullOrEmpty(aprioriOutputLine.marital)) ? "," + aprioriOutputLine.marital : "*,";
-                output += (!string.IsNullOrEmpty(aprioriOutputLine.occupation)) ? "," + aprioriOutputLine.occupation : "*,";
-                output += (!string.IsNullOrEmpty(aprioriOutputLine.race)) ? "," + aprioriOutputLine.race : "*,";
-                output += (!string.IsNullOrEmpty(aprioriOutputLine.relationship)) ? "," + aprioriOutputLine.relationship : "*,";
-                output += (!string.IsNullOrEmpty(aprioriOutputLine.salary)) ? "," + aprioriOutputLine.salary : "*,";
-                output += (!string.IsNullOrEmpty(aprioriOutputLine.sex)) ? "," + aprioriOutputLine.sex : "*,";
-                output += (!string.IsNullOrEmpty(aprioriOutputLine.workClass)) ? "," + aprioriOutputLine.workClass : "*,";
+                output += " SUPPORT " + line.supportValue + "  {";
+                output += (!string.IsNullOrEmpty(line.age)) ? line.age : "*,";
+                output += (!string.IsNullOrEmpty(line.country)) ? "," + line.country : "*,";
+                output += (!string.IsNullOrEmpty(line.education)) ? "," + line.education : "*,";
+                output += (!string.IsNullOrEmpty(line.edu_num)) ? "," + line.edu_num : "*,";
+                output += (!string.IsNullOrEmpty(line.gain)) ? "," + line.gain : "*,";
+                output += (!string.IsNullOrEmpty(line.hours)) ? "," + line.hours : "*,";
+                output += (!string.IsNullOrEmpty(line.loss)) ? "," + line.loss : "*,";
+                output += (!string.IsNullOrEmpty(line.marital)) ? "," + line.marital : "*,";
+                output += (!string.IsNullOrEmpty(line.occupation)) ? "," + line.occupation : "*,";
+                output += (!string.IsNullOrEmpty(line.race)) ? "," + line.race : "*,";
+                output += (!string.IsNullOrEmpty(line.relationship)) ? "," + line.relationship : "*,";
+                output += (!string.IsNullOrEmpty(line.salary)) ? "," + line.salary : "*,";
+                output += (!string.IsNullOrEmpty(line.sex)) ? "," + line.sex : "*,";
+                output += (!string.IsNullOrEmpty(line.workClass)) ? "," + line.workClass : "*,";
                 output += "}\n";
+                counter++;
+
+                StringBuilder sb = new StringBuilder(output);
+                sb.Replace("*,", "");
+                sb.Replace("{,", "{");
+                output = sb.ToString();
+                textBox.AppendText(output);
+            }
+        }
+
+        private void printDistinctAprioriOutputListToRichText(List<DistinctAprioriOutput> input, RichTextBox textBox)
+        {
+            int counter = 1;
+            foreach (var line in input)
+            {
+                string output = "";
+                output += counter + " ";
+                output += "{";
+                output += (!string.IsNullOrEmpty(line.age)) ? line.age : "*,";
+                output += (!string.IsNullOrEmpty(line.country)) ? "," + line.country : "*,";
+                output += (!string.IsNullOrEmpty(line.education)) ? "," + line.education : "*,";
+                output += (!string.IsNullOrEmpty(line.edu_num)) ? "," + line.edu_num : "*,";
+                output += (!string.IsNullOrEmpty(line.gain)) ? "," + line.gain : "*,";
+                output += (!string.IsNullOrEmpty(line.hours)) ? "," + line.hours : "*,";
+                output += (!string.IsNullOrEmpty(line.loss)) ? "," + line.loss : "*,";
+                output += (!string.IsNullOrEmpty(line.marital)) ? "," + line.marital : "*,";
+                output += (!string.IsNullOrEmpty(line.occupation)) ? "," + line.occupation : "*,";
+                output += (!string.IsNullOrEmpty(line.race)) ? "," + line.race : "*,";
+                output += (!string.IsNullOrEmpty(line.relationship)) ? "," + line.relationship : "*,";
+                output += (!string.IsNullOrEmpty(line.salary)) ? "," + line.salary : "*,";
+                output += (!string.IsNullOrEmpty(line.sex)) ? "," + line.sex : "*,";
+                output += (!string.IsNullOrEmpty(line.workClass)) ? "," + line.workClass : "*,";
+                output += "} ";
+                foreach(var fileId in line.fileIDs)
+                {
+                    output += fileId + ", ";
+                }
+                output += "\n";
                 counter++;
 
                 StringBuilder sb = new StringBuilder(output);
@@ -217,6 +262,53 @@ namespace DataMining
                 fileReader.ReadFile(file);
                 supportedFiles.AddRange(fileReader.GetEntries().Cast<AprioriOutput>().ToList());
             }
+            
+            List<DistinctAprioriOutput> distinctAprioriOutput = findDuplicate(supportedFiles);
+            fileReader.ReadList(distinctAprioriOutput);
+            distinctAprioriOutput = fileReader.GetEntries().Cast<DistinctAprioriOutput>().ToList();
+
+
+            Form4 form4 = new Form4();
+            form4.Show();
+            var textBox = form4.getTextBox();
+
+            printDistinctAprioriOutputListToRichText(distinctAprioriOutput,textBox);
+        }
+
+        private List<DistinctAprioriOutput> findDuplicate(List <AprioriOutput> input)
+        {
+            foreach(var line in input)
+            {
+                int idx = line.rawLine.IndexOf(" (");
+                if (idx > -1)
+                    line.rawLine = line.rawLine.Remove(idx);
+            }
+
+            int treshold = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(T_partNumber.Text) / 2));
+
+            var query = input.GroupBy(x => x.rawLine)
+              .Where(g => g.Count() >= treshold)
+              .Select(y => new {Value = y, Count = y.Count() })
+              .ToList();
+
+
+            List<DistinctAprioriOutput> distinctAprioriOutputs = new List<DistinctAprioriOutput>();
+            foreach (var element in query)
+            {
+                var distinctAprioriOutput = new DistinctAprioriOutput();
+                distinctAprioriOutput.fileIDs = new List<int>();
+                foreach (var ids in element.Value.ToList())
+                {
+                    distinctAprioriOutput.fileIDs.Add(ids.fileId);
+                }
+
+                distinctAprioriOutput.rawLine = element.Value.First().rawLine;
+                distinctAprioriOutput.duplicateCount = element.Count;
+
+                distinctAprioriOutputs.Add(distinctAprioriOutput);
+            }
+
+            return distinctAprioriOutputs;
         }
 
         //---------------------------BELOW FUNCTIONS TO SEPERATE CSV FILES INTO ONE .DAT FILE------------------------
