@@ -78,13 +78,13 @@ namespace DataMining
                     if (word.Contains("salary"))
                         entry.salary = word.Split('y')[1];//salary, after Y letter                  
                 }
+                entry.rawData = line;
                 entry.id = id;
                 lines.Add(entry);
                 id++;
             }   
         }
    
-       
         public void ReadFile(string fileName) //TO READ SUPPORTED FILES
         {
             lines = new List<Object>();
@@ -218,6 +218,8 @@ namespace DataMining
                 aprioriEntry.duplicateCount = line.duplicateCount;
                 aprioriEntry.fileIDs = new List<int>();
                 aprioriEntry.fileIDs = line.fileIDs;
+                aprioriEntry.rawLine = line.rawLine;
+                aprioriEntry.supportValue = Math.Round(line.supportValue,4);
                 lines.Add(aprioriEntry);
             }
         }

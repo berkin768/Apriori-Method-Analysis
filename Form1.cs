@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -87,18 +88,20 @@ namespace DataMining
             B_seperatedData.Enabled = true;
         }
 
+
         private void B_fullData_Click(object sender, EventArgs e)
         {
             Form2 form2 = new Form2();
             form2.Show();
-            var binding = form2.GetBindingSource();
-            binding.DataSource = lines;
+            var outputBox = form2.GetTextBox();
+            
+            printFullData(lines, outputBox);         
         }
 
         private void Frame_Load(object sender, EventArgs e)
         {
             B_fullData.Enabled = false;
-            B_supportedData.Enabled = false;        
+            B_supportedData.Enabled = false;
             B_seperatedData.Enabled = false;
         }
 
@@ -112,17 +115,16 @@ namespace DataMining
             string outputFile = "output.txt";
 
             deleteFile(outputFile);
-
-            //proc1.WorkingDirectory = @"C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining";
+            string shortFileName = getFileName(fileName);
+            aprioriProcessInfo.WindowStyle = ProcessWindowStyle.Hidden;
             aprioriProcessInfo.WorkingDirectory = workingDirectory;
             aprioriProcessInfo.FileName = @"C:\Windows\System32\cmd.exe";
-
-            string command = "-s" + supportValue + " census.dat - >> " + outputFile;
+            Console.WriteLine(fileName);
+            string command = "-s" + supportValue + " " + shortFileName + " - >> " + outputFile;
             aprioriProcessInfo.Arguments = "/c apriori.exe " + command;
 
             var aprioriProcess = Process.Start(aprioriProcessInfo);
             aprioriProcess.WaitForExit();
-
 
             fileReader.ReadFile(workingDirectory + outputFile);
             aprioriLines = fileReader.GetEntries().Cast<AprioriOutput>().ToList();
@@ -137,29 +139,41 @@ namespace DataMining
             printAprioriOutputListToRichText(sortedAprioriLines, textBox);
         }
 
-        private void printAprioriOutputListToRichText(List<AprioriOutput> input,RichTextBox textBox)
+        private void printFullData(List<Entry> input, RichTextBox textBox)
         {
             int counter = 1;
             foreach (var line in input)
             {
                 string output = "";
                 AppendText(textBox, counter + " ", Color.Red, new Font("Arial", 10));
-                AppendText(textBox, " SUPPORT " + line.supportValue , Color.Blue, new Font("Arial", 10));
+                output += "{";
+                output += line.rawData;
+                output += "}\n";
+                counter++;
+
+                StringBuilder sb = new StringBuilder(output);
+                sb.Replace("*,", "");
+                sb.Replace("{,", "{");
+                output = sb.ToString();
+
+                textBox.AppendText(output);
+            }
+        }
+
+        private void printAprioriOutputListToRichText(List<AprioriOutput> input, RichTextBox textBox)
+        {
+            int counter = 1;
+            foreach (var line in input)
+            {
+                string output = "";
+                AppendText(textBox, counter + " ", Color.Red, new Font("Arial", 10));
+                AppendText(textBox, " SUPPORT " + line.supportValue, Color.Blue, new Font("Arial", 10));
                 output += " {";
-                output += (!string.IsNullOrEmpty(line.age)) ? line.age : "*,";
-                output += (!string.IsNullOrEmpty(line.country)) ? "," + line.country : "*,";
-                output += (!string.IsNullOrEmpty(line.education)) ? "," + line.education : "*,";
-                output += (!string.IsNullOrEmpty(line.edu_num)) ? "," + line.edu_num : "*,";
-                output += (!string.IsNullOrEmpty(line.gain)) ? "," + line.gain : "*,";
-                output += (!string.IsNullOrEmpty(line.hours)) ? "," + line.hours : "*,";
-                output += (!string.IsNullOrEmpty(line.loss)) ? "," + line.loss : "*,";
-                output += (!string.IsNullOrEmpty(line.marital)) ? "," + line.marital : "*,";
-                output += (!string.IsNullOrEmpty(line.occupation)) ? "," + line.occupation : "*,";
-                output += (!string.IsNullOrEmpty(line.race)) ? "," + line.race : "*,";
-                output += (!string.IsNullOrEmpty(line.relationship)) ? "," + line.relationship : "*,";
-                output += (!string.IsNullOrEmpty(line.salary)) ? "," + line.salary : "*,";
-                output += (!string.IsNullOrEmpty(line.sex)) ? "," + line.sex : "*,";
-                output += (!string.IsNullOrEmpty(line.workClass)) ? "," + line.workClass : "*,";
+                int idx = line.rawLine.IndexOf(" (");
+                if (idx > -1)
+                    line.rawLine = line.rawLine.Remove(idx);
+
+                output += line.rawLine;
                 output += "}\n";
                 counter++;
 
@@ -187,27 +201,17 @@ namespace DataMining
             int counter = 1;
             foreach (var line in input)
             {
-               
-
                 string output = "";
                 AppendText(textBox, counter + " ", Color.Red, new Font("Arial", 10));
+                AppendText(textBox, " AVERAGE SUPPORT " + line.supportValue + " ", Color.DarkGreen, new Font("Arial", 10));
                 output += "{";
-                output += (!string.IsNullOrEmpty(line.age)) ? line.age : "*,";
-                output += (!string.IsNullOrEmpty(line.country)) ? "," + line.country : "*,";
-                output += (!string.IsNullOrEmpty(line.education)) ? "," + line.education : "*,";
-                output += (!string.IsNullOrEmpty(line.edu_num)) ? "," + line.edu_num : "*,";
-                output += (!string.IsNullOrEmpty(line.gain)) ? "," + line.gain : "*,";
-                output += (!string.IsNullOrEmpty(line.hours)) ? "," + line.hours : "*,";
-                output += (!string.IsNullOrEmpty(line.loss)) ? "," + line.loss : "*,";
-                output += (!string.IsNullOrEmpty(line.marital)) ? "," + line.marital : "*,";
-                output += (!string.IsNullOrEmpty(line.occupation)) ? "," + line.occupation : "*,";
-                output += (!string.IsNullOrEmpty(line.race)) ? "," + line.race : "*,";
-                output += (!string.IsNullOrEmpty(line.relationship)) ? "," + line.relationship : "*,";
-                output += (!string.IsNullOrEmpty(line.salary)) ? "," + line.salary : "*,";
-                output += (!string.IsNullOrEmpty(line.sex)) ? "," + line.sex : "*,";
-                output += (!string.IsNullOrEmpty(line.workClass)) ? "," + line.workClass : "*,";
+                int idx = line.rawLine.IndexOf(" (");
+                if (idx > -1)
+                    line.rawLine = line.rawLine.Remove(idx);
+
+                output += line.rawLine;
                 output += "} ";
-                foreach(var fileId in line.fileIDs)
+                foreach (var fileId in line.fileIDs)
                 {
                     AppendText(textBox, fileId + ", ", Color.Blue, new Font("Arial", 10));
                     //output += fileId + ", ";
@@ -217,9 +221,8 @@ namespace DataMining
 
                 StringBuilder sb = new StringBuilder(output);
                 sb.Replace("*,", "");
-                sb.Replace("{,", "{");            
+                sb.Replace("{,", "{");
                 output = sb.ToString();
-                //textBox.AppendText(output);
                 AppendText(textBox, output, Color.Black, new Font("Arial", 10));
             }
         }
@@ -237,9 +240,10 @@ namespace DataMining
         private void getSupportValuesFromFiles()
         {
             string filesToDelete = @"outputCSV*.txt";
-            deleteFile(filesToDelete);            
+            deleteFile(filesToDelete);
 
-            string filesToProcess = @"census*.csv";
+            string shortFileNameWithoutExtension = getFileName(fileName).Split('.')[0];
+            string filesToProcess = @shortFileNameWithoutExtension + "*.csv";
             int fileId = 1;
             string workingDirectory = getDirectory();
             string[] fileList = Directory.GetFiles(workingDirectory, filesToProcess);
@@ -249,14 +253,13 @@ namespace DataMining
                 var aprioriProcessInfo = new ProcessStartInfo();
                 aprioriProcessInfo.UseShellExecute = true;
 
-                string supportValue = T_minSupport.Text;                
+                string supportValue = T_minSupport.Text;
                 string outputFile = "outputCSV" + fileId + ".txt";
 
-                //proc1.WorkingDirectory = @"C:\Users\berki\Documents\Visual Studio 2017\Projects\DataMining\DataMining";
                 aprioriProcessInfo.WorkingDirectory = workingDirectory;
                 aprioriProcessInfo.FileName = @"C:\Windows\System32\cmd.exe";
-
-                string command = "-s" + supportValue + " census" + fileId + ".csv" + " - >> " + outputFile;
+                aprioriProcessInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                string command = "-s" + supportValue + " " + shortFileNameWithoutExtension + fileId + ".csv" + " - >> " + outputFile;
                 aprioriProcessInfo.Arguments = "/c apriori.exe " + command;
 
                 var aprioriProcess = Process.Start(aprioriProcessInfo);
@@ -273,11 +276,12 @@ namespace DataMining
 
             List<AprioriOutput> supportedFiles = new List<AprioriOutput>();
 
-            foreach(var file in fileList){
+            foreach (var file in fileList)
+            {
                 fileReader.ReadFile(file);
                 supportedFiles.AddRange(fileReader.GetEntries().Cast<AprioriOutput>().ToList());
             }
-            
+
             List<DistinctAprioriOutput> distinctAprioriOutput = findDuplicate(supportedFiles);
             fileReader.ReadList(distinctAprioriOutput);
             distinctAprioriOutput = fileReader.GetEntries().Cast<DistinctAprioriOutput>().ToList();
@@ -287,12 +291,12 @@ namespace DataMining
             form4.Show();
             var textBox = form4.getTextBox();
 
-            printDistinctAprioriOutputListToRichText(distinctAprioriOutput,textBox);
+            printDistinctAprioriOutputListToRichText(distinctAprioriOutput, textBox);
         }
 
-        private List<DistinctAprioriOutput> findDuplicate(List <AprioriOutput> input)
+        private List<DistinctAprioriOutput> findDuplicate(List<AprioriOutput> input)
         {
-            foreach(var line in input)
+            foreach (var line in input)
             {
                 int idx = line.rawLine.IndexOf(" (");
                 if (idx > -1)
@@ -303,7 +307,7 @@ namespace DataMining
 
             var query = input.GroupBy(x => x.rawLine)
               .Where(g => g.Count() >= treshold)
-              .Select(y => new {Value = y, Count = y.Count() })
+              .Select(y => new { Value = y, Count = y.Count() })
               .ToList();
 
 
@@ -312,17 +316,21 @@ namespace DataMining
             {
                 var distinctAprioriOutput = new DistinctAprioriOutput();
                 distinctAprioriOutput.fileIDs = new List<int>();
+
+                double averageSupportValue = 0;
                 foreach (var ids in element.Value.ToList())
                 {
                     distinctAprioriOutput.fileIDs.Add(ids.fileId);
+                    averageSupportValue += ids.supportValue;
                 }
 
                 distinctAprioriOutput.rawLine = element.Value.First().rawLine;
                 distinctAprioriOutput.duplicateCount = element.Count;
+                distinctAprioriOutput.supportValue = averageSupportValue / element.Count;
 
                 distinctAprioriOutputs.Add(distinctAprioriOutput);
             }
-
+            distinctAprioriOutputs = distinctAprioriOutputs.OrderByDescending(o => o.supportValue).ToList();
             return distinctAprioriOutputs;
         }
 
@@ -339,7 +347,9 @@ namespace DataMining
 
         private void seperateFile(List<string> rawData)
         {
-            string filesToDelete = @"census*.csv";
+            string shortFileNameWithoutExtension = getFileName(fileName).Split('.')[0];
+
+            string filesToDelete = @shortFileNameWithoutExtension + "*.csv";
             deleteFile(filesToDelete);
 
             double partNumber = Convert.ToDouble(T_partNumber.Text);
@@ -353,10 +363,10 @@ namespace DataMining
             int progress = 0;
             for (int i = 1; i <= partNumber; i++)
             {
-                string fileName = workingDirectory + "census" + i + ".csv";
+                string filePath = workingDirectory + shortFileNameWithoutExtension + i + ".csv";
                 List<String> seperatedList = seperateList(rawData, indexSize, i);
 
-                CreateCSVFile(seperatedList, fileName);
+                CreateCSVFile(seperatedList, filePath);
                 progress += 100 / Convert.ToInt32(partNumber);
                 progressSeperated.Value = progress;
             }
@@ -383,10 +393,19 @@ namespace DataMining
             int index = workingDirectory.IndexOf("bin");
             if (index > 0)
             {
-                workingDirectory = workingDirectory.Remove(index, workingDirectory.Length-index);
+                workingDirectory = workingDirectory.Remove(index, workingDirectory.Length - index);
             }
 
             return workingDirectory;
+        }
+
+        private string getFileName(string filePath)
+        {
+            string[] words = filePath.Split(new string[] { "\\" }, StringSplitOptions.None);
+            int length = words.Length;
+            string fileName = words[length - 1];
+            //TODO
+            return fileName;
         }
 
         private void CreateCSVFile(List<String> input, string fileName)
@@ -402,5 +421,7 @@ namespace DataMining
             sw.Flush();
             sw.Close();
         }
+
+
     }
 }

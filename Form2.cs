@@ -15,6 +15,8 @@ namespace DataMining
         public Form2()
         {
             InitializeComponent();
-        }        
+        }
+
+
     }
 }

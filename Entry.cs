@@ -23,5 +23,6 @@ namespace DataMining
         public string hours { get; set; }
         public string country { get; set; }
         public string salary { get; set; }
+        public string rawData { get; set; }
     }
 }
